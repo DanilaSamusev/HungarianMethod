@@ -10,29 +10,26 @@
        
         public void MinusMaxElement(Matrix matrix)
         {
-            int sourcesCount = matrix._colomn.Length;
-            int destinationsCount = matrix._row.Length;
-
-            for (int j = 0; j < destinationsCount - 1; j++)
+            for (int j = 0; j < matrix.Row.Length - 1; j++)
             {
-                int maxPrice = FindMaxInColomn(matrix._priceMatrix, j);
+                int maxPrice = FindMaxInColumn(matrix.PriceMatrix, j);
 
-                for (int i = 0; i < sourcesCount; i++)
+                for (int i = 0; i < matrix.Column.Length; i++)
                 {
-                    matrix._priceMatrix[i][j] = maxPrice - matrix._priceMatrix[i][j];
+                    matrix.PriceMatrix[i][j] = maxPrice - matrix.PriceMatrix[i][j];
                 }
             }
         }
 
-        private int FindMaxInColomn(int[][] matrix, int colomnNumber)
+        private int FindMaxInColumn(int[][] matrix, int columnNumber)
         {
-            int max = matrix[0][colomnNumber];
+            int max = matrix[0][columnNumber];
 
             for (int i = 1; i < matrix.GetLength(0); i++)
             {
-                if (matrix[i][colomnNumber] > max)
+                if (matrix[i][columnNumber] > max)
                 {
-                    max = matrix[i][colomnNumber];
+                    max = matrix[i][columnNumber];
                 }
             }
 
@@ -41,8 +38,15 @@
 
         private void MinusMinElement(Matrix matrix)
         {
-            int min = FindMinInRow(matrix._priceMatrix, 2);
-            int b = 1;
+            for (int i = 0; i < matrix.Column.Length; i++)
+            {
+                int min = FindMinInRow(matrix.PriceMatrix, i);
+                
+                for (int j = 0; j < matrix.Column.Length; j++)
+                {
+                    matrix.PriceMatrix[i][j] -= min;
+                }
+            }
         }  
         
         private int FindMinInRow(int[][] matrix, int rowNumber)

@@ -6,28 +6,26 @@ namespace HungarianAlgoritm
     {              
         public void Run()
         {
-            Matrix matrix = new Matrix();
+            var matrix = new Matrix();
             DisplayMatrix(matrix);
 
-            AlgoritmImplementor implementor = new AlgoritmImplementor();
+            var implementor = new AlgoritmImplementor();
             implementor.MakePreparationStage(matrix);
             DisplayMatrix(matrix);
-
+            
         }
-
         
-
         private void DisplayMatrix(Matrix matrix)
         {
-            foreach (string rowMember in matrix._row) 
+            foreach (string rowMember in matrix.Row) 
             {
                 Console.Write($"   {rowMember} ");
             }
 
             Console.WriteLine();
 
-            int sourcesCount = matrix._colomn.Length;
-            int destinationsCount = matrix._row.Length;
+            int sourcesCount = matrix.Column.Length;
+            int destinationsCount = matrix.Row.Length;
 
             for (int i = 0; i < sourcesCount; i++)
             {
@@ -35,11 +33,11 @@ namespace HungarianAlgoritm
                 {
                     if (j == 0)
                     {
-                        string colomnMember = matrix._colomn[0];
-                        Console.Write($" {colomnMember} ");
+                        string columnMember = matrix.Column[0];
+                        Console.Write($" {columnMember} ");
                     }
                    
-                    int price = matrix._priceMatrix[i][j];
+                    int price = matrix.PriceMatrix[i][j];
                     Console.Write($" {price} ");                        
                     
                 }
