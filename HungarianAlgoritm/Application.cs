@@ -3,47 +3,28 @@
 namespace HungarianAlgoritm
 {
     public class Application
-    {              
-        public void Run()
-        {
-            var matrix = new Matrix();
-            DisplayMatrix(matrix);
+    {
+        private readonly AlgorithmImplementor _implementor;
 
-            var implementor = new AlgoritmImplementor();
-            implementor.MakePreparationStage(matrix);
-            DisplayMatrix(matrix);
-            
+        public Application()
+        {
+            _implementor = new AlgorithmImplementor();
         }
         
-        private void DisplayMatrix(Matrix matrix)
+        public void Run()
         {
-            foreach (string rowMember in matrix.Row) 
+            var matrix = new []
             {
-                Console.Write($"   {rowMember} ");
-            }
-
-            Console.WriteLine();
-
-            int sourcesCount = matrix.Column.Length;
-            int destinationsCount = matrix.Row.Length;
-
-            for (int i = 0; i < sourcesCount; i++)
-            {
-                for(int j = 0; j < destinationsCount; j++)
-                {
-                    if (j == 0)
-                    {
-                        string columnMember = matrix.Column[0];
-                        Console.Write($" {columnMember} ");
-                    }
-                   
-                    int price = matrix.PriceMatrix[i][j];
-                    Console.Write($" {price} ");                        
-                    
-                }
-
-                Console.WriteLine();
-            }
+                new[] { 3, 4, 2, 2, 1},
+                new[] { 4, 5, 3, 1, 3},
+                new[] { 4, 3, 1, 1, 1},
+                new[] { 3, 1, 2, 2, 2},
+                new[] { 1, 3, 1, 2, 1}               
+            };
+            
+            _implementor.MakeMatrixOptimal(matrix);
+            
+            Console.WriteLine("Result");
         }
     }
 }
