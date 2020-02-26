@@ -1,51 +1,83 @@
-﻿namespace HungarianAlgoritm
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace HungarianAlgoritm
 {
     class AlgorithmImplementor
     {
-        private readonly MatrixHelper _helper;
-        
+        private readonly ArrayHelper _helper;
+
         public AlgorithmImplementor()
         {
-            _helper = new MatrixHelper();
+            _helper = new ArrayHelper();
         }
 
-        public void MakeMatrixOptimal(int[][] matrix)
+        public string DistributeGoods(int[][] matrix, int[] goods, int[] needs)
         {
-            MakePreparationStage(matrix);
-        }
-        
-        private void MakePreparationStage(int[][] matrix)
-        {
-            MinusMaxElement(matrix);
-            MinusMinElement(matrix);
-        }
-        
-        private void MinusMaxElement(int[][] matrix)
-        {
-            for (int j = 0; j < matrix.Length; j++)
-            {
-                int maxPrice = _helper.FindMaxInColumn(matrix, j);
+            string result = "";
 
-                for (int i = 0; i < matrix.GetLength(0); i++)
-                {
-                    matrix[i][j] = maxPrice - matrix[i][j];
-                }
-            }
-        }
-        
-        private void MinusMinElement(int[][] matrix)
-        {
-            for (int i = 0; i < matrix.Length; i++)
+            for (var j = 0; j < needs.Length; j++)
             {
-                int min = _helper.FindMinInRow(matrix, i);
-                
-                for (int j = 0; j < matrix.Length; j++)
+                int positionOfMin = _helper.FindPositionOfMin(needs);
+                List<int> goodsWithZeroes = GetGoodsWithZeroes(matrix, goods, positionOfMin);
+
+                for (int i = 0; i < goodsWithZeroes.Count; i++)
                 {
-                    matrix[i][j] -= min;
+                    if (GoodIsMax(goodsWithZeroes, goodsWithZeroes[i]))
+                    {
+                        int goodId;
+                        
+                        if (needs[positionOfMin] <= goodsWithZeroes[i])
+                        {
+                            goodId = goods.ToList().IndexOf(goodsWithZeroes[i]);
+                            goods[goodId] -= needs[positionOfMin];
+                            goodsWithZeroes[i] -= needs[positionOfMin];
+                            result += $"{goodId}-{positionOfMin} ({needs[positionOfMin]})\n";
+                            needs[positionOfMin] = 0;
+                            break;
+                        }
+                        
+                        goodId = goods.ToList().IndexOf(goodsWithZeroes[i]);
+                        result += $"{goodId}-{positionOfMin} ({goodsWithZeroes[i]})\n";
+                        needs[positionOfMin] -= goodsWithZeroes[i];
+                        goods[goodId] = 0;
+                        goodsWithZeroes[i] = 0;
+                        i = 0;
+                    }
                 }
             }
-        }  
-        
-        
+
+            return result;
+        }
+
+        private List<int> GetGoodsWithZeroes(int[][] matrix, int[] goods, int columnNumber)
+        {
+            var goodsWithZeroes = new List<int>();
+
+            for (var i = 0; i < goods.Length; i++)
+            {
+                if (matrix[i][columnNumber] == 0)
+                {
+                    goodsWithZeroes.Add(goods[i]);
+                }
+            }
+
+            return goodsWithZeroes;
+        }
+
+        private bool GoodIsMax(List<int> goods, int good)
+        {
+            for (var i = 0; i < goods.Count; i++)
+            {
+                if (goods[i] > good)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+       
     }
 }
