@@ -18,30 +18,30 @@ namespace HungarianAlgoritm
 
             for (var j = 0; j < needs.Length; j++)
             {
-                int positionOfMin = _helper.FindPositionOfMin(needs);
-                List<int> goodsWithZeroes = GetGoodsWithZeroes(matrix, goods, positionOfMin);
+                int positionOfMinimalNeed = _helper.FindPositionOfMinimalElement(needs);
+                List<int> cheapestGoods = GetCheapestGoods(matrix, goods, positionOfMinimalNeed);
 
-                for (int i = 0; i < goodsWithZeroes.Count; i++)
+                for (int i = 0; i < cheapestGoods.Count; i++)
                 {
-                    if (GoodIsMax(goodsWithZeroes, goodsWithZeroes[i]))
+                    if (GoodIsMax(cheapestGoods, cheapestGoods[i]))
                     {
-                        int goodId;
+                        int maxGoodPosition;
                         
-                        if (needs[positionOfMin] <= goodsWithZeroes[i])
+                        if (needs[positionOfMinimalNeed] <= cheapestGoods[i])
                         {
-                            goodId = goods.ToList().IndexOf(goodsWithZeroes[i]);
-                            goods[goodId] -= needs[positionOfMin];
-                            goodsWithZeroes[i] -= needs[positionOfMin];
-                            result += $"{goodId}-{positionOfMin} ({needs[positionOfMin]})\n";
-                            needs[positionOfMin] = 0;
+                            maxGoodPosition = goods.ToList().IndexOf(cheapestGoods[i]);
+                            goods[maxGoodPosition] -= needs[positionOfMinimalNeed];
+                            cheapestGoods[i] -= needs[positionOfMinimalNeed];
+                            result += $"{maxGoodPosition}-{positionOfMinimalNeed} ({needs[positionOfMinimalNeed]})\n";
+                            needs[positionOfMinimalNeed] = 0;
                             break;
                         }
                         
-                        goodId = goods.ToList().IndexOf(goodsWithZeroes[i]);
-                        result += $"{goodId}-{positionOfMin} ({goodsWithZeroes[i]})\n";
-                        needs[positionOfMin] -= goodsWithZeroes[i];
-                        goods[goodId] = 0;
-                        goodsWithZeroes[i] = 0;
+                        maxGoodPosition = goods.ToList().IndexOf(cheapestGoods[i]);
+                        result += $"{maxGoodPosition}-{positionOfMinimalNeed} ({cheapestGoods[i]})\n";
+                        needs[positionOfMinimalNeed] -= cheapestGoods[i];
+                        goods[maxGoodPosition] = 0;
+                        cheapestGoods[i] = 0;
                         i = 0;
                     }
                 }
@@ -50,7 +50,7 @@ namespace HungarianAlgoritm
             return result;
         }
 
-        private List<int> GetGoodsWithZeroes(int[][] matrix, int[] goods, int columnNumber)
+        private List<int> GetCheapestGoods(int[][] matrix, int[] goods, int columnNumber)
         {
             var goodsWithZeroes = new List<int>();
 
@@ -77,7 +77,5 @@ namespace HungarianAlgoritm
 
             return true;
         }
-
-       
     }
 }

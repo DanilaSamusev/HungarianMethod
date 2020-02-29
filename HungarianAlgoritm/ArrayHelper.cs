@@ -5,7 +5,7 @@ namespace HungarianAlgoritm
 {
     public class ArrayHelper
     {
-        public int FindPositionOfMin(int[] array)
+        public int FindPositionOfMinimalElement(int[] array)
         {
             int[] temp = new int[array.Length];
             Array.Copy(array, temp, array.Length);

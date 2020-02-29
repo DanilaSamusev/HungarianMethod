@@ -13,8 +13,8 @@ namespace HungarianAlgoritm
 
         public void Run()
         {
-            var goods = new int[] {140, 50, 260};
-            var needs = new int[] {150, 170, 30, 90, 10};
+            var goods = new [] {140, 50, 260};
+            var needs = new [] {150, 170, 30, 90, 10};
 
             var matrix1 = new[]
             {
