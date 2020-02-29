@@ -30,7 +30,7 @@ namespace HungarianAlgoritm
                 new[] {8, 8, 14, 8, 5},
             };
 
-            string res = _implementor.DistributeGoods(matrix1, goods, needs);
+            string res = _implementor.DistributeGoods(matrix2, goods, needs);
             Console.WriteLine(res);
         }
     }

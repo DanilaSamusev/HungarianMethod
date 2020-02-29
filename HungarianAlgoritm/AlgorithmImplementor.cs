@@ -16,6 +16,8 @@ namespace HungarianAlgoritm
         {
             string result = "";
 
+            _helper.SimplifyMatrix(matrix);
+            
             for (var j = 0; j < needs.Length; j++)
             {
                 int positionOfMinimalNeed = _helper.FindPositionOfMinimalElement(needs);
