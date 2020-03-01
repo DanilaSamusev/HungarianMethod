@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HungarianAlgoritm
 {
@@ -30,8 +31,16 @@ namespace HungarianAlgoritm
                 new[] {8, 8, 14, 8, 5},
             };
 
-            string res = _implementor.DistributeGoods(matrix2, goods, needs);
-            Console.WriteLine(res);
+            List<DistributedGood> res = _implementor.DistributeGoods(matrix1, goods, needs);
+            DisplayGoods(res);
+        }
+
+        public void DisplayGoods(List<DistributedGood> goods)
+        {
+            foreach (var good in goods)
+            {
+                Console.WriteLine($"{good.Row}-{good.Column} ({good.Amount})");
+            }
         }
     }
 }

@@ -6,78 +6,84 @@ namespace HungarianAlgoritm
     class AlgorithmImplementor
     {
         private readonly ArrayHelper _helper;
+        private readonly List<DistributedGood> _distributedGoods;
+        private int[] _needs;
 
         public AlgorithmImplementor()
         {
             _helper = new ArrayHelper();
+            _distributedGoods = new List<DistributedGood>();
         }
 
-        public string DistributeGoods(int[][] matrix, int[] goods, int[] needs)
+        public List<DistributedGood> DistributeGoods(int[][] matrix, int[] goods, int[] needs)
         {
-            string result = "";
-
+            _needs = needs;
             _helper.SimplifyMatrix(matrix);
-            
+            bool isDistributionOptimal = false;
+
+            while(!isDistributionOptimal)
+            {
+                Distribute(matrix, goods, needs);
+                isDistributionOptimal = DistributionIsOptimal();
+            }
+
+            return _distributedGoods;
+        }
+
+        private void Distribute(int[][] matrix, int[] goods, int[] needs)
+        {
             for (var j = 0; j < needs.Length; j++)
             {
-                int positionOfMinimalNeed = _helper.FindPositionOfMinimalElement(needs);
+                var positionOfMinimalNeed = _helper.FindPositionOfMinimalElement(needs);
                 List<int> cheapestGoods = GetCheapestGoods(matrix, goods, positionOfMinimalNeed);
 
                 for (int i = 0; i < cheapestGoods.Count; i++)
                 {
                     if (GoodIsMax(cheapestGoods, cheapestGoods[i]))
                     {
-                        int maxGoodPosition;
-                        
+                        var maxGoodPosition = goods.ToList().IndexOf(cheapestGoods[i]);
+                        DistributedGood good;
+
                         if (needs[positionOfMinimalNeed] <= cheapestGoods[i])
                         {
-                            maxGoodPosition = goods.ToList().IndexOf(cheapestGoods[i]);
                             goods[maxGoodPosition] -= needs[positionOfMinimalNeed];
                             cheapestGoods[i] -= needs[positionOfMinimalNeed];
-                            result += $"{maxGoodPosition}-{positionOfMinimalNeed} ({needs[positionOfMinimalNeed]})\n";
+                            good = new DistributedGood(maxGoodPosition, positionOfMinimalNeed,
+                                needs[positionOfMinimalNeed]);
                             needs[positionOfMinimalNeed] = 0;
+                            _distributedGoods.Add(good);
                             break;
                         }
-                        
-                        maxGoodPosition = goods.ToList().IndexOf(cheapestGoods[i]);
-                        result += $"{maxGoodPosition}-{positionOfMinimalNeed} ({cheapestGoods[i]})\n";
+
+                        good = new DistributedGood(maxGoodPosition, positionOfMinimalNeed,
+                            cheapestGoods[i]);
                         needs[positionOfMinimalNeed] -= cheapestGoods[i];
                         goods[maxGoodPosition] = 0;
                         cheapestGoods[i] = 0;
                         i = 0;
+                        
+                        _distributedGoods.Add(good);
                     }
                 }
             }
-
-            return result;
         }
 
         private List<int> GetCheapestGoods(int[][] matrix, int[] goods, int columnNumber)
         {
-            var goodsWithZeroes = new List<int>();
-
-            for (var i = 0; i < goods.Length; i++)
-            {
-                if (matrix[i][columnNumber] == 0)
-                {
-                    goodsWithZeroes.Add(goods[i]);
-                }
-            }
-
-            return goodsWithZeroes;
+            return goods.Where((t, i) => matrix[i][columnNumber] == 0).ToList();
         }
 
         private bool GoodIsMax(List<int> goods, int good)
         {
-            for (var i = 0; i < goods.Count; i++)
-            {
-                if (goods[i] > good)
-                {
-                    return false;
-                }
-            }
+            return goods.All(t => t <= good);
+        }
 
-            return true;
+        private bool DistributionIsOptimal()
+        {
+            int totalNeed = _needs.ToList().Sum();
+            int totalDistribution = _distributedGoods.Select(good => good.Amount).Sum();
+
+            return totalDistribution >= totalNeed;
         }
     }
 }
