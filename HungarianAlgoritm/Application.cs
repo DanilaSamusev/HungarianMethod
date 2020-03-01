@@ -5,13 +5,6 @@ namespace HungarianAlgoritm
 {
     public class Application
     {
-        private readonly AlgorithmImplementor _implementor;
-
-        public Application()
-        {
-            _implementor = new AlgorithmImplementor();
-        }
-
         public void Run()
         {
             var goods = new [] {140, 50, 260};
@@ -31,7 +24,8 @@ namespace HungarianAlgoritm
                 new[] {8, 8, 14, 8, 5},
             };
 
-            List<DistributedGood> res = _implementor.DistributeGoods(matrix1, goods, needs);
+            var implementor = new AlgorithmImplementor(matrix2, goods, needs);
+            List<DistributedGood> res = implementor.DistributeGoods();
             DisplayGoods(res);
         }
 

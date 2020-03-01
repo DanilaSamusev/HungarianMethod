@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace HungarianAlgoritm
 {
@@ -7,11 +6,9 @@ namespace HungarianAlgoritm
     {
         public int FindPositionOfMinimalElement(int[] array)
         {
-            int[] temp = new int[array.Length];
-            Array.Copy(array, temp, array.Length);
-            Array.Sort(temp);
-            temp = temp.Where(elem => elem != 0).ToArray();
-            return array.ToList().IndexOf(temp[0]);
+            return array.ToList().IndexOf(
+                array.Where(x => x != 0)
+                .Min());
         }
 
         public void SimplifyMatrix(int[][] matrix)
@@ -28,7 +25,7 @@ namespace HungarianAlgoritm
             for (int j = 0; j < matrix[0].Length; j++)
             {
                 int min = FindMinInColumn(matrix, j);
-                
+
                 for (int i = 0; i < matrix.GetLength(0); i++)
                 {
                     matrix[i][j] -= min;
@@ -39,7 +36,7 @@ namespace HungarianAlgoritm
         private int FindMinInColumn(int[][] matrix, int columnNumber)
         {
             int min = matrix[0][columnNumber];
-            
+
             for (int i = 1; i < matrix.GetLength(0); i++)
             {
                 if (matrix[i][columnNumber] < min)
