@@ -17,26 +17,23 @@ namespace HungarianAlgoritm
         public AlgorithmImplementor(int[][] matrix, int[] goods, int[] needs)
         {
             _helper = new ArrayHelper();
+            _sourceGoods = goods;
+            _sourceNeeds = needs;
             _distributedGoods = new List<DistributedGood>();
+            
             _matrix = matrix;
             _needs = new int[needs.Length];
             _goods = new int[goods.Length];
-            _sourceGoods = goods;
-            _sourceNeeds = needs;
-            ResetParams();
+            
+            ResetDistribution();
         }
 
-        private void ResetParams()
-        {
-            Array.Copy(_sourceNeeds, _needs, _sourceNeeds.Length);
-            Array.Copy(_sourceGoods, _goods, _sourceGoods.Length);
-        }
-        
         public List<DistributedGood> DistributeGoods()
-        {
-            _helper.SimplifyMatrix(_matrix);
+        { 
             bool isDistributionOptimal = false;
-
+            
+            _helper.SimplifyMatrix(_matrix);
+            
             while (!isDistributionOptimal)
             {
                 Distribute(_matrix, _goods, _needs);
@@ -44,8 +41,7 @@ namespace HungarianAlgoritm
 
                 if (!isDistributionOptimal)
                 {
-                    ResetParams();
-                    _distributedGoods.Clear();
+                    ResetDistribution();
                     OptimizeMatrix();
                 }
             }
@@ -55,7 +51,9 @@ namespace HungarianAlgoritm
 
         private void Distribute(int[][] matrix, int[] goods, int[] needs)
         {
-            for (var j = 0; j < needs.Length; j++)
+            int iterationsAmount = needs.Length;
+            
+            for (var k = 0; k < iterationsAmount; k++)
             {
                 var positionOfMinimalNeed = _helper.FindPositionOfMinimalElement(needs);
                 List<int> cheapestGoods = GetCheapestGoods(matrix, goods, positionOfMinimalNeed);
@@ -64,9 +62,9 @@ namespace HungarianAlgoritm
                 {
                     if (GoodIsMax(cheapestGoods, cheapestGoods[i]))
                     {
-                        var maxGoodPosition = goods.ToList().IndexOf(cheapestGoods[i]);
                         DistributedGood good;
-
+                        var maxGoodPosition = goods.ToList().IndexOf(cheapestGoods[i]); 
+                        
                         if (needs[positionOfMinimalNeed] <= cheapestGoods[i])
                         {
                             goods[maxGoodPosition] -= needs[positionOfMinimalNeed];
@@ -103,10 +101,7 @@ namespace HungarianAlgoritm
 
         private bool DistributionIsOptimal()
         {
-            int totalNeed = _needs.ToList().Sum();
-            int totalDistribution = _distributedGoods.Select(good => good.Amount).Sum();
-
-            return totalDistribution >= totalNeed;
+            return _needs.ToList().Sum() == 0;
         }
 
         private void OptimizeMatrix()
@@ -141,6 +136,13 @@ namespace HungarianAlgoritm
                     _matrix[i][columnNumber] += min;
                 }
             }
+        }
+        
+        private void ResetDistribution()
+        {
+            Array.Copy(_sourceNeeds, _needs, _sourceNeeds.Length);
+            Array.Copy(_sourceGoods, _goods, _sourceGoods.Length);
+            _distributedGoods.Clear();
         }
     }
 }
