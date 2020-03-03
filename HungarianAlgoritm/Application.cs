@@ -26,7 +26,7 @@ namespace HungarianAlgoritm
             };
 
             var distributer = new Distributer();
-            List<DistributedGood> res = distributer.Distribute(matrix1, goods1, needs1);
+            List<DistributedGood> res = distributer.Distribute(matrix2, goods2, needs2);
             DisplayGoods(res);
         }
 

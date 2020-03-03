@@ -30,10 +30,10 @@ namespace HungarianAlgoritm
 
             while (true)
             {
-
                 while (true)
                 {
-                    List<int> columnNumbers = _arrayHelper.FindColumnNubersWithRequiredZeroesCount(requiredZeroesCount, zeroMatrix);
+                    List<int> columnNumbers =
+                        _arrayHelper.FindColumnNubersWithRequiredZeroesCount(requiredZeroesCount, zeroMatrix);
 
                     if (columnNumbers.Count != 0)
                     {
@@ -43,11 +43,13 @@ namespace HungarianAlgoritm
                         {
                             return _distributedGoods;
                         }
+
                         requiredZeroesCount = 1;
                         continue;
                     }
 
-                    List<int> rowNumbers = _arrayHelper.FindRowNubersWithRequiredZeroesCount(requiredZeroesCount, zeroMatrix);
+                    List<int> rowNumbers =
+                        _arrayHelper.FindRowNubersWithRequiredZeroesCount(requiredZeroesCount, zeroMatrix);
 
                     if (rowNumbers.Count != 0)
                     {
@@ -57,16 +59,18 @@ namespace HungarianAlgoritm
                         {
                             return _distributedGoods;
                         }
+
                         requiredZeroesCount = 1;
                         continue;
                     }
 
                     if (DistributionIsImpossible())
                     {
-                        OptimizeMatrix(matrix, _goods.ToList().IndexOf(_goods.Min()));
+                        OptimizeMatrix(matrix, _goods.ToList().IndexOf(_goods.Max()));
                         Array.Copy(needs, _needs, needs.Length);
                         Array.Copy(goods, _goods, goods.Length);
                         SetZeroMatrix(matrix);
+                        _distributedGoods.Clear();
                         requiredZeroesCount = 1;
                     }
 
@@ -80,16 +84,12 @@ namespace HungarianAlgoritm
 
         private void OptimizeMatrix(int[,] matrix, int rowNumber)
         {
-            var zeroesInRows = new List<int>();
-            var columns = new List<int>();
+            int min = 10000;
 
-            int min = 1;
-
-            min = matrix[rowNumber, 0];
 
             for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
             {
-                if (matrix[rowNumber, columnNumber] < min)
+                if (matrix[rowNumber, columnNumber] < min && matrix[rowNumber, columnNumber] != 0)
                 {
                     min = matrix[rowNumber, columnNumber];
                 }
@@ -102,10 +102,8 @@ namespace HungarianAlgoritm
 
             for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
             {
-
                 if (matrix[rowNumber, columnNumber] < 0)
                 {
-
                     for (int row = 0; row < matrix.GetLength(0); row++)
                     {
                         matrix[row, columnNumber] += min;
@@ -113,8 +111,7 @@ namespace HungarianAlgoritm
                 }
             }
         }
-
-
+        
         private bool DistributionIsImpossible()
         {
             for (int rowNumber = 0; rowNumber < zeroMatrix.GetLength(0); rowNumber++)
@@ -127,7 +124,6 @@ namespace HungarianAlgoritm
                     }
                 }
             }
-
             return true;
         }
 
@@ -142,10 +138,8 @@ namespace HungarianAlgoritm
 
             for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
             {
-
                 for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
                 {
-
                     if (matrix[rowNumber, columnNumber] == 0)
                     {
                         zeroMatrix[rowNumber, columnNumber] = 0;
@@ -176,7 +170,7 @@ namespace HungarianAlgoritm
         {
             foreach (int rowNumber in rowNumbers)
             {
-                for (int columnNumber = 0; columnNumber < zeroMatrix.GetLength(0); columnNumber++)
+                for (int columnNumber = 0; columnNumber < zeroMatrix.GetLength(1); columnNumber++)
                 {
                     if (zeroMatrix[rowNumber, columnNumber] == 0)
                     {
@@ -188,7 +182,6 @@ namespace HungarianAlgoritm
 
         private void Disrtibute(int rowNumber, int columnNumber)
         {
-
             if (_needs[columnNumber] <= _goods[rowNumber])
             {
                 _distributedGoods.Add(new DistributedGood(rowNumber, columnNumber, _needs[columnNumber]));
@@ -207,7 +200,6 @@ namespace HungarianAlgoritm
 
         private void CrossMatrixColumnOrRow()
         {
-
             for (int rowNumber = 0; rowNumber < _goods.Length; rowNumber++)
             {
                 if (_goods[rowNumber] == 0)
