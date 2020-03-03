@@ -7,26 +7,26 @@ namespace HungarianAlgoritm
     {
         public void Run()
         {
-            var goods1 = new [] {140, 50, 260};
+            var goods1 = new [] {130, 50, 260};
             var needs1 = new [] {150, 170, 30, 90, 10};
-            var matrix1 = new[]
+            var matrix1 = new int[,]
             {
-                new[] {3, 4, 6, 4, 10},
-                new[] {9, 10, 15, 12, 6},
-                new[] {8, 8, 14, 8, 5},
+                { 0, 0, 0, 0, 10},
+                { 0, 0, 3, 2, 0},
+                { 1, 0, 5, 0, 1}
             };
             
             var goods2 = new [] {10,20,30};
             var needs2 = new [] {15,20,25};
-            var matrix2 = new[]
+            var matrix2 = new int[,]
             {
-                new[] {5,3,1},
-                new[] {3,2,4},
-                new[] {4,1,2},
+                { 2, 1, 0},
+                { 0, 0, 3},
+                { 1, 0, 0}
             };
-            
-            var implementor = new AlgorithmImplementor(matrix1, goods1, needs1);
-            List<DistributedGood> res = implementor.DistributeGoods();
+
+            var distributer = new Distributer();
+            List<DistributedGood> res = distributer.Distribute(matrix1, goods1, needs1);
             DisplayGoods(res);
         }
 

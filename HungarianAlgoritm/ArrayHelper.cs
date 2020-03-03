@@ -12,26 +12,48 @@ namespace HungarianAlgoritm
                 .Min());
         }
 
-        public void SimplifyMatrix(int[][] matrix)
+        public void SimplifyMatrix(int[,] matrix)
         {
-            foreach (int[] row in matrix)
+            int min = 1;
+
+            for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
             {
-                var min = row.Min();
-                for (int i = 0; i < row.Length; i++)
+                min = matrix[rowNumber, 0];
+
+                for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
                 {
-                    row[i] -= min;
+                    if (matrix[rowNumber, columnNumber] < min)
+                    {
+                        min = matrix[rowNumber, columnNumber];
+                    }
                 }
             }
 
-            for (int j = 0; j < matrix[0].Length; j++)
+            for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
             {
-                int min = FindMinInColumn(matrix, j);
+                min = matrix[rowNumber, 0];
 
-                for (int i = 0; i < matrix.GetLength(0); i++)
+                for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
                 {
-                    matrix[i][j] -= min;
+                    matrix[rowNumber, columnNumber] -= min;
                 }
             }
+
+            for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
+            {
+                min = matrix[columnNumber, 0];
+
+                for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
+                {
+                    if (matrix[rowNumber, columnNumber] < min)
+                    {
+                        min = matrix[rowNumber, columnNumber];
+                    }
+                }
+            }
+
+
+
         }
 
         public int FindMinInColumn(int[][] matrix, int columnNumber)
@@ -53,11 +75,11 @@ namespace HungarianAlgoritm
         {
             var columnNubersWithZeroes = new List<int>();
 
-            for (int columnNuber = 0; columnNuber < matrix.GetLength(0); columnNuber++)
+            for (int columnNuber = 0; columnNuber < matrix.GetLength(1); columnNuber++)
             {
                 int actualZeroesCount = 0;
 
-                for (int rowNumber = 0; rowNumber < matrix.Length; rowNumber++)
+                for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
                 {
 
                     if (matrix[rowNumber,columnNuber] == 0)
@@ -79,11 +101,11 @@ namespace HungarianAlgoritm
         {
             var rowNubersWithZeroes = new List<int>();
 
-            for (int rowNumber = 0; rowNumber < matrix.Length; rowNumber++)
+            for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
             {
                 int actualZeroesCount = 0;
 
-                for (int columnNuber = 0; columnNuber < matrix.Length; columnNuber++)
+                for (int columnNuber = 0; columnNuber < matrix.GetLength(1); columnNuber++)
                 {
 
                     if (matrix[rowNumber, columnNuber] == 0)
@@ -101,5 +123,4 @@ namespace HungarianAlgoritm
             return rowNubersWithZeroes;
         }
     }
-}
 }

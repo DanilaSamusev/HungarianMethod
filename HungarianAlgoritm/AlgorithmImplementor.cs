@@ -72,39 +72,7 @@ namespace HungarianAlgoritm
             return _needs.ToList().Sum() == 0;
         }
 
-        private void OptimizeMatrix()
-        {
-            int rowNumber;
-            int min;
-            var zeroesInRows = new List<int>();
-            var columns = new List<int>();
-
-            for (int i = 0; i < _matrix.GetLength(0); i++)
-            {
-                zeroesInRows.Add(_matrix[i].Count(x => x == 0));
-            }
-
-            rowNumber = zeroesInRows.IndexOf(zeroesInRows.Min());
-            min = _matrix[rowNumber].Where(x => x != 0).Min();
-            
-            for (int j = 0; j < _matrix[rowNumber].Length; j++)
-            {
-                if (_matrix[rowNumber][j] == 0)
-                {
-                    columns.Add(j);
-                }
-                
-                _matrix[rowNumber][j] -= min;
-            }
-
-            foreach (int columnNumber in columns)
-            {
-                for (int i = 0; i < _matrix.Length; i++)
-                {
-                    _matrix[i][columnNumber] += min;
-                }
-            }
-        }
+        
         
         private void SetDefaultDistribution()
         {
