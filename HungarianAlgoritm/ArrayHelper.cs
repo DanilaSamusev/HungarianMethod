@@ -14,12 +14,11 @@ namespace HungarianAlgoritm
 
         public void SimplifyMatrix(int[,] matrix)
         {
-            int min = 1;
+            int min = 10000;
 
             for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
             {
-                min = matrix[rowNumber, 0];
-
+                
                 for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
                 {
                     if (matrix[rowNumber, columnNumber] < min)
@@ -27,21 +26,24 @@ namespace HungarianAlgoritm
                         min = matrix[rowNumber, columnNumber];
                     }
                 }
-            }
 
-            for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
-            {
-                min = matrix[rowNumber, 0];
-
-                for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
+                for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
                 {
-                    matrix[rowNumber, columnNumber] -= min;
+                    for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
+                    {
+                        matrix[rowNumber, columnNumber] -= min;
+                    }
                 }
+
             }
+
+            
+
+            min = 10000;
 
             for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
             {
-                min = matrix[columnNumber, 0];
+                min = 10000;
 
                 for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
                 {
@@ -52,7 +54,13 @@ namespace HungarianAlgoritm
                 }
             }
 
-
+            for (int columnNumber = 0; columnNumber < matrix.GetLength(1); columnNumber++)
+            {                
+                for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
+                {
+                    matrix[rowNumber, columnNumber] -= min;
+                }
+            }
 
         }
 

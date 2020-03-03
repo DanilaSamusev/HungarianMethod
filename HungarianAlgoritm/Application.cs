@@ -7,13 +7,13 @@ namespace HungarianAlgoritm
     {
         public void Run()
         {
-            var goods1 = new [] {130, 50, 260};
+            var goods1 = new [] {140, 50, 260};
             var needs1 = new [] {150, 170, 30, 90, 10};
             var matrix1 = new int[,]
             {
-                { 0, 0, 0, 0, 10},
-                { 0, 0, 3, 2, 0},
-                { 1, 0, 5, 0, 1}
+                { 3, 4, 6, 4, 10},
+                { 9, 10, 15, 12, 6},
+                { 8, 8, 14, 8, 5}
             };
             
             var goods2 = new [] {10,20,30};
