@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace HungarianAlgoritm
 {
@@ -33,7 +34,7 @@ namespace HungarianAlgoritm
             }
         }
 
-        private int FindMinInColumn(int[][] matrix, int columnNumber)
+        public int FindMinInColumn(int[][] matrix, int columnNumber)
         {
             int min = matrix[0][columnNumber];
 
@@ -47,5 +48,58 @@ namespace HungarianAlgoritm
 
             return min;
         }
+
+        public List<int> FindColumnNubersWithRequiredZeroesCount(int requiredZeroesCount, int[,] matrix)
+        {
+            var columnNubersWithZeroes = new List<int>();
+
+            for (int columnNuber = 0; columnNuber < matrix.GetLength(0); columnNuber++)
+            {
+                int actualZeroesCount = 0;
+
+                for (int rowNumber = 0; rowNumber < matrix.Length; rowNumber++)
+                {
+
+                    if (matrix[rowNumber,columnNuber] == 0)
+                    {
+                        actualZeroesCount++;
+                    }
+                }
+
+                if (actualZeroesCount == requiredZeroesCount)
+                {
+                    columnNubersWithZeroes.Add(columnNuber);
+                }
+            }
+
+            return columnNubersWithZeroes;
+        }
+
+        public List<int> FindRowNubersWithRequiredZeroesCount(int requiredZeroesCount, int[,] matrix)
+        {
+            var rowNubersWithZeroes = new List<int>();
+
+            for (int rowNumber = 0; rowNumber < matrix.Length; rowNumber++)
+            {
+                int actualZeroesCount = 0;
+
+                for (int columnNuber = 0; columnNuber < matrix.Length; columnNuber++)
+                {
+
+                    if (matrix[rowNumber, columnNuber] == 0)
+                    {
+                        actualZeroesCount++;
+                    }
+                }
+
+                if (actualZeroesCount == requiredZeroesCount)
+                {
+                    rowNubersWithZeroes.Add(rowNumber);
+                }
+            }
+
+            return rowNubersWithZeroes;
+        }
     }
+}
 }
