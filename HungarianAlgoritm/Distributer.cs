@@ -44,6 +44,15 @@ namespace HungarianAlgoritm
                             return _distributedGoods;
                         }
 
+                        if (DistributionIsImpossible())
+                        {
+                            OptimizeMatrix(matrix, _goods.ToList().IndexOf(_goods.Max()));
+                            Array.Copy(needs, _needs, needs.Length);
+                            Array.Copy(goods, _goods, goods.Length);
+                            SetZeroMatrix(matrix);
+                            _distributedGoods.Clear();
+                        }
+                        
                         requiredZeroesCount = 1;
                         continue;
                     }
@@ -60,6 +69,15 @@ namespace HungarianAlgoritm
                             return _distributedGoods;
                         }
 
+                        if (DistributionIsImpossible())
+                        {
+                            OptimizeMatrix(matrix, _goods.ToList().IndexOf(_goods.Max()));
+                            Array.Copy(needs, _needs, needs.Length);
+                            Array.Copy(goods, _goods, goods.Length);
+                            SetZeroMatrix(matrix);
+                            _distributedGoods.Clear();
+                        }
+                        
                         requiredZeroesCount = 1;
                         continue;
                     }
@@ -76,8 +94,7 @@ namespace HungarianAlgoritm
 
                     break;
                 }
-
-                int a = 0;
+                
                 requiredZeroesCount++;
             }
         }
