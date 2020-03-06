@@ -6,7 +6,6 @@ namespace HungarianAlgoritm
     public class ArrayHelper
     {
         
-
         public void SimplifyMatrix(int[,] matrix)
         {
             int min;
