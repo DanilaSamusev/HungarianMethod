@@ -62,9 +62,11 @@ class ParentComponent extends React.Component {
 
     this.state = {
 
-        rowCount: 2,
-        columnCount: 4,
+        rowCount: 0,
+        columnCount: 0,
         matrix : null,
+        goods : null,
+        needs : null,
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -76,18 +78,29 @@ handleInputChange(event) {
   let value = target.value;
   let name = target.name;
 
-console.log(name);
+  let row = parseInt(name[0]);
+  let column = parseInt(name[1]);
+  let matrix = this.state.matrix
+
+  if (isNaN(parseInt(value))){
+    matrix[row][column] = 0;
+  }
+  else{
+    matrix[row][column] = parseInt(value);
+  }
 
   this.setState(() => {
     return {
-      row : [0, 1, 1, 1],
+
     };
-  })
+})
 }
 
 initializeMatrix() {
 
-      let matrix = [];
+  if (this.state.matrix == null)
+  {
+    let matrix = [];
 
       for (let row = 0; row < this.state.rowCount; row++) {
 
@@ -100,7 +113,12 @@ initializeMatrix() {
           }
       }
 
-      return matrix;
+      this.setState(() => {
+        return {
+          matrix : matrix,
+        };
+      })
+  }
   }
 
   render() {
@@ -111,18 +129,20 @@ initializeMatrix() {
     if (this.state.rowCount > 0 && this.state.columnCount > 0) {
 
       matrix = this.initializeMatrix();
-      viewMatrix = matrix.map((row, rowId) =>
-       <div name="row" row = {row}>
 
-            {
-              row.map((elem, id) =>
-              <input name={rowId+ " " + id} onChange={this.handleInputChange} value = {elem}>
+      if (this.state.matrix != null){
+        viewMatrix = this.state.matrix.map((row, rowId) =>
+        <div name="row" row = {row}>
 
-              </input>)
-            }
+             {
+               row.map((elem, id) =>
+               <input name={rowId+ "" + id} onChange={this.handleInputChange} value = {elem}>
 
-       </div> );
+               </input>)
+             }
 
+        </div> );
+      }
     }
 
     return (
