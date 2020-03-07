@@ -1,0 +1,38 @@
+.inline{
+    display: flex;
+    padding-left: 40%;
+}
+
+.matrix{
+    width: min-content;
+}
+
+.row{
+    width: min-content;
+    display: flex;
+}
+
+.goods{
+    padding-left: 20px;
+    width: min-content;
+}
+
+.needs{
+    width: min-content;
+    height: min-content;
+    display: flex;
+    padding-top: 15px;
+    padding-left: 40%;
+}
+
+.elem{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+/*
+.needs{
+    display: flex;
+    margin-left: -905px;
+    padding-top: 100px;
+}*/

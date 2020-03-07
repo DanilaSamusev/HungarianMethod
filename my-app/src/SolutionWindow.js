@@ -1,12 +1,12 @@
-﻿import React from 'react';
-import {render} from 'react-dom';
+﻿import './Window.css';
+import React from 'react';
 
 export default class SolutionWindow extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            rowCount: 2,
+            rowCount: 3,
             columnCount: 4,
             matrix: null,
             goods: null,
@@ -72,6 +72,7 @@ export default class SolutionWindow extends React.Component {
 
     initializeNeeds() {
         if (this.state.needs == null) {
+
             let needs = this.state.needs;
             needs = [];
 
@@ -98,9 +99,10 @@ export default class SolutionWindow extends React.Component {
 
             if (this.state.matrix != null) {
                 matrix = this.state.matrix.map((row, rowId) => (
-                    <div name="row" row={row}>
+                    <div className="row" name="row" row={row}>
                         {row.map((elem, id) => (
                             <input
+                                className="elem"
                                 name={rowId + "" + id}
                                 onChange={this.handleInputChange}
                                 value={elem}
@@ -116,25 +118,28 @@ export default class SolutionWindow extends React.Component {
 
             if (this.state.goods != null) {
                 goods = this.state.goods.map(good =>
-                    <div>
-                        <input value={good}/>
-                    </div>);
+                    <input className="elem" value={good}/>
+                );
             }
         }
 
         if (this.state.matrix != null) {
-            this.initializeGoods();
+            this.initializeNeeds();
 
-            if (this.state.goods != null) {
-                goods = this.state.goods.map(good => <input value={good}/>);
+            if (this.state.needs != null) {
+                needs = this.state.needs.map(need =>
+                    <input className="elem" value={need}/>
+                );
             }
         }
 
         return (
-            <div>
-                {matrix}
-                <div>------</div>
-                {goods}
+            <div className="app">
+                <div className="inline">
+                    <div className="matrix">{matrix}</div>
+                    <div className="goods">{goods}</div>
+                </div>
+                <div className="needs">{needs}</div>
             </div>
         );
     }
