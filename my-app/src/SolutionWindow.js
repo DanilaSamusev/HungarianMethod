@@ -17,6 +17,8 @@ export default class SolutionWindow extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleGoodsChange = this.handleGoodsChange.bind(this);
         this.handleNeedsChange = this.handleNeedsChange.bind(this);
+        this.solveMatrix = this.solveMatrix.bind(this);
+
     }
 
     handleInputChange(event) {
@@ -162,7 +164,7 @@ export default class SolutionWindow extends React.Component {
             needs: this.state.needs,
         };
 
-        fetch('http://localhost:5000/api/ticket/ticket',
+        fetch('http://localhost:5000/api/home',
             {
                 method: "put",
                 body: JSON.stringify(data),
