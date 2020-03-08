@@ -15,6 +15,8 @@ export default class SolutionWindow extends React.Component {
 
         this.handleMatrixChange = this.handleMatrixChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleGoodsChange = this.handleGoodsChange.bind(this);
+        this.handleNeedsChange = this.handleNeedsChange.bind(this);
     }
 
     handleInputChange(event) {
@@ -22,8 +24,6 @@ export default class SolutionWindow extends React.Component {
         let target = event.target;
         let value = target.value;
         let name = target.name;
-
-        console.log(value);
 
         if (isNaN(parseInt(value))) {
             this.setState({
@@ -50,6 +50,44 @@ export default class SolutionWindow extends React.Component {
             matrix[row][column] = 0;
         } else {
             matrix[row][column] = parseInt(value);
+        }
+
+        this.setState(() => {
+            return {};
+        });
+    }
+
+    handleGoodsChange(event) {
+
+        let target = event.target;
+        let value = target.value;
+        let name = target.name;
+
+        let goods = this.state.goods;
+
+        if (isNaN(parseInt(value))) {
+            goods[parseInt(name)] = 0;
+        } else {
+            goods[parseInt(name)] = parseInt(value);
+        }
+
+        this.setState(() => {
+            return {};
+        });
+    }
+
+    handleNeedsChange(event) {
+
+        let target = event.target;
+        let value = target.value;
+        let name = target.name;
+
+        let needs = this.state.needs;
+
+        if (isNaN(parseInt(value))) {
+            needs[parseInt(name)] = 0;
+        } else {
+            needs[parseInt(name)] = parseInt(value);
         }
 
         this.setState(() => {
@@ -112,7 +150,7 @@ export default class SolutionWindow extends React.Component {
         }
     }
 
-    initializeResult(){
+    initializeResult() {
 
     }
 
@@ -194,8 +232,8 @@ export default class SolutionWindow extends React.Component {
             this.initializeGoods();
 
             if (this.state.goods != null) {
-                goods = this.state.goods.map(good =>
-                    <input className="elem" value={good}/>
+                goods = this.state.goods.map((good, id) =>
+                    <input onChange={this.handleGoodsChange} name={id} className="elem" value={good}/>
                 );
             }
         }
@@ -204,8 +242,8 @@ export default class SolutionWindow extends React.Component {
             this.initializeNeeds();
 
             if (this.state.needs != null) {
-                needs = this.state.needs.map(need =>
-                    <input className="elem" value={need}/>
+                needs = this.state.needs.map((need, id) =>
+                    <input onChange={this.handleNeedsChange} name={id} className="elem" value={need}/>
                 );
             }
         }
@@ -213,7 +251,7 @@ export default class SolutionWindow extends React.Component {
         if (this.state.matrix != null) {
             solve = <button
                 className="solveButton"
-                onClick={}>
+                onClick={this.solveMatrix}>
                 Решить</button>
         }
 
