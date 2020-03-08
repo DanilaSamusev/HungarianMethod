@@ -6,16 +6,38 @@ export default class SolutionWindow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rowCount: 3,
-            columnCount: 4,
+            rowCount: 0,
+            columnCount: 0,
             matrix: null,
             goods: null,
             needs: null
         };
+
+        this.handleMatrixChange = this.handleMatrixChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     handleInputChange(event) {
+
+        let target = event.target;
+        let value = target.value;
+        let name = target.name;
+
+        console.log(value);
+
+        if (isNaN(parseInt(value))) {
+            this.setState({
+                [name]: 0,
+            })
+        } else {
+            this.setState({
+                [name]: parseInt(value),
+            })
+        }
+    }
+
+    handleMatrixChange(event) {
+
         let target = event.target;
         let value = target.value;
         let name = target.name;
@@ -37,7 +59,9 @@ export default class SolutionWindow extends React.Component {
 
     initializeMatrix() {
         if (this.state.matrix == null) {
+
             let matrix = [];
+
             for (let row = 0; row < this.state.rowCount; row++) {
                 matrix[row] = [];
                 for (let column = 0; column < this.state.columnCount; column++) {
@@ -90,9 +114,31 @@ export default class SolutionWindow extends React.Component {
 
     render() {
 
+        let columnCount;
+        let rowCount;
         let matrix;
         let goods;
         let needs;
+
+        if (this.state.rowCount == 0 || this.state.columnCount == 0) {
+
+            rowCount =
+                <div className="rowCount">
+                    Row count:
+                    <input onChange={this.handleInputChange}
+                           className="rowCountInput" name="rowCount"
+                           value={this.state.rowCount}/>
+                </div>;
+
+            columnCount =
+                <div className="columnCount">
+                    Column count:
+                    <input onChange={this.handleInputChange}
+                           className="columnCountInput"
+                           name="columnCount"
+                           value={this.state.columnCount}/>
+                </div>;
+        }
 
         if (this.state.rowCount > 0 && this.state.columnCount > 0) {
             this.initializeMatrix();
@@ -104,7 +150,7 @@ export default class SolutionWindow extends React.Component {
                             <input
                                 className="elem"
                                 name={rowId + "" + id}
-                                onChange={this.handleInputChange}
+                                onChange={this.handleMatrixChange}
                                 value={elem}
                             />
                         ))}
@@ -135,10 +181,17 @@ export default class SolutionWindow extends React.Component {
 
         return (
             <div className="app">
+
+                <div>
+                    {rowCount}
+                    {columnCount}
+                </div>
+
                 <div className="inline">
                     <div className="matrix">{matrix}</div>
                     <div className="goods">{goods}</div>
                 </div>
+
                 <div className="needs">{needs}</div>
             </div>
         );
