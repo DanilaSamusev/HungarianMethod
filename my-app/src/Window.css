@@ -3,6 +3,14 @@
     padding-left: 40%;
 }
 
+.columnCount{
+    padding-top: 1%;
+}
+
+.rowCount{
+    padding-top: 2%;
+}
+
 .rowCountInput, .columnCountInput{
     text-align: center;
 }
@@ -14,7 +22,7 @@
 
 .matrix{
     width: min-content;
-    padding-top: 5%;
+    padding-top: 3%;
 }
 
 .row{
@@ -24,7 +32,7 @@
 
 .goods{
     padding-left: 20px;
-    padding-top: 5%;
+    padding-top: 3%;
     width: min-content;
 }
 
@@ -36,14 +44,15 @@
     padding-left: 40%;
 }
 
+.solveButton{
+    width: 70px;
+    height: 30px;
+    margin-top: 1%;
+    margin-right: 16%;
+}
+
 .elem{
     width: 40px;
     height: 40px;
     text-align: center;
 }
-/*
-.needs{
-    display: flex;
-    margin-left: -905px;
-    padding-top: 100px;
-}*/

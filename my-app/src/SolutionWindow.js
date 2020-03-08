@@ -112,6 +112,36 @@ export default class SolutionWindow extends React.Component {
         }
     }
 
+    initializeResult(){
+
+    }
+
+    solveMatrix() {
+
+        let data = {
+            matrix: this.state.matrix,
+            goods: this.state.goods,
+            needs: this.state.needs,
+        };
+
+        fetch('http://localhost:5000/api/ticket/ticket',
+            {
+                method: "put",
+                body: JSON.stringify(data),
+                headers:
+                    {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+            })
+            .then(response => {
+                if (response.status >= 200 && response.status < 300) {
+
+                    return response.json().then((data) => this.initializeResult(data));
+                }
+            })
+    }
+
     render() {
 
         let columnCount;
@@ -119,6 +149,7 @@ export default class SolutionWindow extends React.Component {
         let matrix;
         let goods;
         let needs;
+        let solve;
 
         if (this.state.rowCount == 0 || this.state.columnCount == 0) {
 
@@ -179,6 +210,13 @@ export default class SolutionWindow extends React.Component {
             }
         }
 
+        if (this.state.matrix != null) {
+            solve = <button
+                className="solveButton"
+                onClick={}>
+                Решить</button>
+        }
+
         return (
             <div className="app">
 
@@ -193,6 +231,11 @@ export default class SolutionWindow extends React.Component {
                 </div>
 
                 <div className="needs">{needs}</div>
+
+                <div>
+                    {solve}
+                </div>
+
             </div>
         );
     }
