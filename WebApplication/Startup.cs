@@ -41,12 +41,12 @@ namespace WebApplication
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
+            app.UseCors("CorsPolicy");
+            
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseCors("CorsPolicy");
+            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

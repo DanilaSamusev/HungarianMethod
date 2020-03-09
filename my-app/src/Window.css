@@ -56,3 +56,13 @@
     height: 40px;
     text-align: center;
 }
+
+.resultMatrix{
+    padding-top: 1%;
+    padding-left: 40%;
+}
+
+.functionResult{
+    display: flex;
+    margin-left: 40%;
+}

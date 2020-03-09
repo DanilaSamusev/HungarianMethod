@@ -198,6 +198,7 @@ export default class SolutionWindow extends React.Component {
         let needs;
         let solve;
         let resultMatrixForView;
+        let functionResult = null;
 
         if (this.state.rowCount == 0 || this.state.columnCount == 0) {
 
@@ -265,40 +266,47 @@ export default class SolutionWindow extends React.Component {
                 Решить</button>
         }
 
-        if (this.state.result != null){
-
-
+        if (this.state.result != null) {
 
             let resultMatrix = [];
 
             for (let row = 0; row < this.state.rowCount; row++) {
+
                 resultMatrix[row] = [];
+
                 for (let column = 0; column < this.state.columnCount; column++) {
+
                     resultMatrix[row][column] = 0;
                 }
             }
 
-            for (let i = 0; i < this.state.result.length; i++){
+            let result = 0;
+
+            for (let i = 0; i < this.state.result.length; i++) {
 
                 let elem = this.state.result[i];
-                console.log(elem.row);
                 resultMatrix[elem.row][elem.column] = elem.amount;
+
+                result += this.state.matrix[elem.row][elem.column] * elem.amount;
+
+                functionResult =
+                    <div>
+                        F = {result}
+                    </div>
             }
 
-            resultMatrixForView = resultMatrix.map( row => (
+            resultMatrixForView = resultMatrix.map(row => (
                 <div className="row">
                     {
                         row.map(elem => (
-                        <input
-                            className="elem"
-                            onChange={this.handleMatrixChange}
-                            value={elem}
-                        />
-                    ))}
+                            <input
+                                className="elem"
+                                onChange={this.handleMatrixChange}
+                                value={elem}
+                            />
+                        ))}
                 </div>
             ));
-
-
         }
 
         return (
@@ -320,8 +328,12 @@ export default class SolutionWindow extends React.Component {
                     {solve}
                 </div>
 
-                <div>
+                <div className="resultMatrix">
                     {resultMatrixForView}
+                </div>
+
+                <div className="functionResult">
+                    {functionResult}
                 </div>
 
             </div>
