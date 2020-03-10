@@ -6,7 +6,7 @@ namespace WebApplication
 {
     class Distributer
     {
-        private int[,] zeroMatrix;
+        private int[,] _zeroMatrix;
         private int[] _goods;
         private int[] _needs;
         private List<DistributedGood> _distributedGoods = new List<DistributedGood>();
@@ -33,7 +33,7 @@ namespace WebApplication
                 while (true)
                 {
                     List<int> columnNumbers =
-                        _arrayHelper.FindColumnNubersWithRequiredZeroesCount(requiredZeroesCount, zeroMatrix);
+                        _arrayHelper.FindColumnNubersWithRequiredZeroesCount(requiredZeroesCount, _zeroMatrix);
 
                     if (columnNumbers.Count != 0)
                     {
@@ -58,7 +58,7 @@ namespace WebApplication
                     }
 
                     List<int> rowNumbers =
-                        _arrayHelper.FindRowNubersWithRequiredZeroesCount(requiredZeroesCount, zeroMatrix);
+                        _arrayHelper.FindRowNubersWithRequiredZeroesCount(requiredZeroesCount, _zeroMatrix);
 
                     if (rowNumbers.Count != 0)
                     {
@@ -131,11 +131,11 @@ namespace WebApplication
         
         private bool DistributionIsImpossible()
         {
-            for (int rowNumber = 0; rowNumber < zeroMatrix.GetLength(0); rowNumber++)
+            for (int rowNumber = 0; rowNumber < _zeroMatrix.GetLength(0); rowNumber++)
             {
-                for (int columnNumber = 0; columnNumber < zeroMatrix.GetLength(1); columnNumber++)
+                for (int columnNumber = 0; columnNumber < _zeroMatrix.GetLength(1); columnNumber++)
                 {
-                    if (zeroMatrix[rowNumber, columnNumber] == 0)
+                    if (_zeroMatrix[rowNumber, columnNumber] == 0)
                     {
                         return false;
                     }
@@ -151,7 +151,7 @@ namespace WebApplication
 
         private void SetZeroMatrix(int[,] matrix)
         {
-            zeroMatrix = new int[matrix.GetLength(0), matrix.GetLength(1)];
+            _zeroMatrix = new int[matrix.GetLength(0), matrix.GetLength(1)];
 
             for (int rowNumber = 0; rowNumber < matrix.GetLength(0); rowNumber++)
             {
@@ -159,11 +159,11 @@ namespace WebApplication
                 {
                     if (matrix[rowNumber, columnNumber] == 0)
                     {
-                        zeroMatrix[rowNumber, columnNumber] = 0;
+                        _zeroMatrix[rowNumber, columnNumber] = 0;
                     }
                     else
                     {
-                        zeroMatrix[rowNumber, columnNumber] = 1;
+                        _zeroMatrix[rowNumber, columnNumber] = 1;
                     }
                 }
             }
@@ -173,9 +173,9 @@ namespace WebApplication
         {
             foreach (int columnNumber in columnNumbers)
             {
-                for (int rowNumber = 0; rowNumber < zeroMatrix.GetLength(0); rowNumber++)
+                for (int rowNumber = 0; rowNumber < _zeroMatrix.GetLength(0); rowNumber++)
                 {
-                    if (zeroMatrix[rowNumber, columnNumber] == 0)
+                    if (_zeroMatrix[rowNumber, columnNumber] == 0)
                     {
                         Disrtibute(rowNumber, columnNumber);
                     }
@@ -187,9 +187,9 @@ namespace WebApplication
         {
             foreach (int rowNumber in rowNumbers)
             {
-                for (int columnNumber = 0; columnNumber < zeroMatrix.GetLength(1); columnNumber++)
+                for (int columnNumber = 0; columnNumber < _zeroMatrix.GetLength(1); columnNumber++)
                 {
-                    if (zeroMatrix[rowNumber, columnNumber] == 0)
+                    if (_zeroMatrix[rowNumber, columnNumber] == 0)
                     {
                         Disrtibute(rowNumber, columnNumber);
                     }
@@ -221,9 +221,9 @@ namespace WebApplication
             {
                 if (_goods[rowNumber] == 0)
                 {
-                    for (var columnNumber = 0; columnNumber < zeroMatrix.GetLength(1); columnNumber++)
+                    for (var columnNumber = 0; columnNumber < _zeroMatrix.GetLength(1); columnNumber++)
                     {
-                        zeroMatrix[rowNumber, columnNumber] = 1;
+                        _zeroMatrix[rowNumber, columnNumber] = 1;
                     }
                 }
             }
@@ -232,9 +232,9 @@ namespace WebApplication
             {
                 if (_needs[columnNumber] == 0)
                 {
-                    for (var rowNumber = 0; rowNumber < zeroMatrix.GetLength(0); rowNumber++)
+                    for (var rowNumber = 0; rowNumber < _zeroMatrix.GetLength(0); rowNumber++)
                     {
-                        zeroMatrix[rowNumber, columnNumber] = 1;
+                        _zeroMatrix[rowNumber, columnNumber] = 1;
                     }
                 }
             }
