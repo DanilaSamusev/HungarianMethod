@@ -1,28 +1,27 @@
+.app{
+    display: flex;
+}
+
 .columnCount, .rowCount{
     width: min-content;
-    padding-left: 40%;
-}
-
-.columnCount{
-    padding-top: 1%;
-}
-
-.rowCount{
-    padding-top: 2%;
 }
 
 .rowCountInput, .columnCountInput{
     text-align: center;
 }
 
+.Matrix{
+    display: inline;
+    margin-left: 3%;
+}
+
 .inline{
     display: flex;
-    padding-left: 40%;
 }
 
 .matrix{
     width: min-content;
-    padding-top: 3%;
+    display: inline;
 }
 
 .row{
@@ -32,7 +31,6 @@
 
 .goods{
     padding-left: 20px;
-    padding-top: 3%;
     width: min-content;
 }
 
@@ -41,14 +39,12 @@
     height: min-content;
     display: flex;
     padding-top: 15px;
-    padding-left: 40%;
 }
 
 .solveButton{
     width: 70px;
     height: 30px;
-    margin-top: 1%;
-    margin-right: 16%;
+    margin-top: 3%;
 }
 
 .elem{
@@ -58,11 +54,9 @@
 }
 
 .resultMatrix{
-    padding-top: 1%;
-    padding-left: 40%;
+    margin-left: 3%;
 }
 
 .functionResult{
     display: flex;
-    margin-left: 40%;
 }

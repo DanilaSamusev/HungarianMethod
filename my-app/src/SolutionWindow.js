@@ -200,25 +200,24 @@ export default class SolutionWindow extends React.Component {
         let resultMatrixForView;
         let functionResult = null;
 
-        if (this.state.rowCount == 0 || this.state.columnCount == 0) {
 
-            rowCount =
-                <div className="rowCount">
-                    Row count:
-                    <input onChange={this.handleInputChange}
-                           className="rowCountInput" name="rowCount"
-                           value={this.state.rowCount}/>
-                </div>;
+        rowCount =
+            <div className="rowCount">
+                Row count:
+                <input onChange={this.handleInputChange}
+                       className="rowCountInput" name="rowCount"
+                       value={this.state.rowCount}/>
+            </div>;
 
-            columnCount =
-                <div className="columnCount">
-                    Column count:
-                    <input onChange={this.handleInputChange}
-                           className="columnCountInput"
-                           name="columnCount"
-                           value={this.state.columnCount}/>
-                </div>;
-        }
+        columnCount =
+            <div className="columnCount">
+                Column count:
+                <input onChange={this.handleInputChange}
+                       className="columnCountInput"
+                       name="columnCount"
+                       value={this.state.columnCount}/>
+            </div>;
+
 
         if (this.state.rowCount > 0 && this.state.columnCount > 0) {
             this.initializeMatrix();
@@ -317,23 +316,22 @@ export default class SolutionWindow extends React.Component {
                     {columnCount}
                 </div>
 
-                <div className="inline">
-                    <div className="matrix">{matrix}</div>
-                    <div className="goods">{goods}</div>
-                </div>
-
-                <div className="needs">{needs}</div>
-
-                <div>
-                    {solve}
+                <div className="Matrix">
+                    <div className="inline">
+                        <div className="matrix">{matrix}</div>
+                        <div className="goods">{goods}</div>
+                    </div>
+                    <div className="needs">{needs}</div>
+                    <div>
+                        {solve}
+                    </div>
                 </div>
 
                 <div className="resultMatrix">
                     {resultMatrixForView}
-                </div>
-
-                <div className="functionResult">
-                    {functionResult}
+                    <div className="functionResult">
+                        {functionResult}
+                    </div>
                 </div>
 
             </div>

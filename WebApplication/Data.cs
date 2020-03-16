@@ -2,7 +2,7 @@
 
 namespace WebApplication
 {
-    public class ClassData
+    public class Data
     {
         public List<int[]> Matrix { get; set; }
         public int[] Goods { get; set; }

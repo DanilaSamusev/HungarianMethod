@@ -16,7 +16,7 @@ namespace WebApplication.Controllers
         }
         
         [HttpPut]
-        public IActionResult GetSolution([FromBody] ClassData data)
+        public IActionResult GetSolution([FromBody] Data data)
         {
             var a = 0;
             int[,] matrix = CopyMatrix(data);
@@ -36,7 +36,7 @@ namespace WebApplication.Controllers
             return Ok(result);
         }
 
-        public int[,]  CopyMatrix(ClassData data)
+        public int[,]  CopyMatrix(Data data)
         {
             
             int[,] matrix = new int[data.Goods.Length, data.Needs.Length];
